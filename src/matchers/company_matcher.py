@@ -25,13 +25,13 @@ def merge_immex_with_rfc(immex_df, padron_df):
         # Primero se intenta buscar una coincidencia exacta en el nombre normalizado
         if immex_name_norm in padron_dict:
             matched_rfcs.append(padron_dict[immex_name_norm])
-            confidence_scores.append(100)  # Coincidencia exacta
+            confidence_scores.append(100)  # Si es coincidencia exacta se señala que es un match del 100% 
         else:
             # Si no hay exacta, se realiza un fuzzy matching contra todas las opciones del padrón
             best_match_norm, best_score = find_best_match(
                 immex_name_norm,
                 list(padron_dict.keys()),
-                threshold=85  # Ajuste para el umbral de fuzzy matching
+                threshold=85  # Al no ser una coincidencia exacta, se usa un umbral menor
             )
             if best_match_norm:
                 matched_rfcs.append(padron_dict[best_match_norm])

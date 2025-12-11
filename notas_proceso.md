@@ -1,4 +1,4 @@
-1. Primero crear un entorno virtual para el proyecto, para así mantener un control de las dependencias.
+1. Para iniciar el proyecto, usualmente lo primero es crear un entorno virtual para el proyecto, para así mantener un control de las dependencias.
 Ejecutando en la terminal:
 ///python -m venv venv
 source venv/bin/activate #Ya que me encuentro en Linux
@@ -62,13 +62,14 @@ Prueba_Tecnica/
 │
 ├── data/                      # Datos crudos
 │   ├── raw/                   # Archivos descargados sin cambios
-│   └── inter/                 # Resultados intermedios
+│   └── inter/                 # Resultados intermedios/incompletos
 │
 └──  outputs/                   # Resultados finales
 
 Considero que la organización es una parte bastante importante en los proyectos y la considero indispensable antes, durante y después de la realización de un proyecto.
 
-3. Decidí automatizar el proceso de descarga del archivo desde el portal del SAT con el script 'sat_downloader.py', bastando con ejecutarlo para recibir el PDF directamente en la carpeta 'data/raw', sin embargo, este código es solo una función que debe ser llamada por otro código, en este caso 'parte_a.py'
+3. Comenzando con la Parte A de la prueba.
+Decidí automatizar el proceso de descarga del archivo desde el portal del SAT con el script 'sat_downloader.py', bastando con ejecutarlo para recibir el PDF directamente en la carpeta 'data/raw', sin embargo, este código es solo una función que debe ser llamada por otro código, en este caso 'parte_a.py'
 
 4. Lo siguiente es extraer todo el texto de las tablas que vienen en el PDF, así que haciendo uso de la libería pdfplumber se puede extraer todo el texto de cada página.
 
@@ -123,7 +124,7 @@ Se continua con la función que termina de limpiar los datos del DataFrame, tal 
     return df
 
 
-5. Ya que están bien definidas las funciones que van a realizar todo el proceso entonces se crea el código que va a ejercer como "ejecutor principal"
+5. Ya que están bien definidas las funciones que van a realizar todo el proceso entonces se crea el código que va a ejercer como "ejecutor principal" 'parte_a.py'
 
 Esto siguiendo una estructura de 3 etapas, para poder llevar un mejor control de lo que está ocurriendo, en qqué orden y facilitar la corrección de errores así como permitir futuras implementaciones o cambios a funciones ya existentes.
 
@@ -135,4 +136,21 @@ Y para cada etapa se agrega tanto un comentario para quien lea el código, como 
 
 Se crea el primer commit bajo el nombre "Parte A" para preservar todo el avance realizado hasta el momento.
 
-7.
+7. Continuando con la Parte B de la prueba.
+Lo primero, al igual que en la parte A, es automatizar la descarga del archivo con el que vamos a trabajar, para crear 'immex_downloader.py' fue suficiente con replicar el código de 'sat_downloader.py' cambiando unos detalles, tales como cambiar el link de donde se obtendrá la descarga y dejando de nuevo la URL como una variable para permitir cambiar el link fácilmente.
+
+8. Después se crea un código que va a normalizar el texto ('data_cleaner.py') que vamos a extraer del excel con el que vamos a trabajar, de forma que al procesar todo obtengamos datos limpios y no haya mezclas, errores y al momento de hacer el match obtengamos los mejores resultados posibles.
+
+#Nota: Para facilitar la creación de este código decidí basarme en la estructura que obtuve del CSV resultado de ejecutar 'parte_a.py', de forma que la función se encarga de eliminar acentos, puntos y espacios.
+
+9. Lo siguiente es un código que inicie el cruce entre los datos del IMMEX con los del padrón de importadores, creando nuevas columnas donde se encontrarán los nombres procesados y normalizados por 'data_claner.py', siendo estas 'NOMBRE_NORM' y 'RAZON_SOCIAL_NORM'.
+Luego se buscan las coincidencias, valorando si son una coincidencia exacta, si es aproximada o si no hay coincidencia alguna.
+Al final se añaden los resultados en columnas donde se añade el RFC (de haber alguno que coincida) y donde se muestre el porcentaje de de coincidencia de los datos.
+
+10. Se crea el código que va a ejecutar todas las funciones realizadas para esta parte de la prueba ('parte_b'), comenzando por cargar el CSV resultado de la parte A, luego se llama a la función que ejecuta la descarga del archivo excel a utilizar.
+Lo siguiente que realiza el script es colocar las reglas para leer el excel, esto ya que el archivo cuenta con 4 filas al inicio que no son datos que se puedan utilizar.
+
+#Nota: Tuve varios resultados fallidos y errores al ejecutar el código por no tomar en cuenta las primeras 4 filas del inicio, es por eso que al final decidí añadir la parte en la que se salta la lectura de dichas filas. 
+
+Se realiza el cruce de datos y se guarda el resultado en un CSV en la carpeta 'outputs/', finalmente, se muestra un porcentaje de de la tasa de coincidencia total.
+

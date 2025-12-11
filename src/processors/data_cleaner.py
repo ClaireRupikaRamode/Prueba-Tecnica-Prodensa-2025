@@ -19,7 +19,7 @@ def find_best_match(query, choices, threshold=80):
     best_score = 0
     best_match = None
     for choice in choices:
-        # Usa ratio de similitud (de 0 a 100)
+        # Se usa un ratio de similitud (de 0 a 100)
         score = fuzz.token_sort_ratio(query, choice)
         if score > best_score and score >= threshold:
             best_score = score
