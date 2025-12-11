@@ -85,6 +85,8 @@ Lo que causaba que al pasar de la cifra 999 se dejara de extraer datos, ya que e
 
 Con unas cuantas modificaciones no solo empezó a detectarse correctamente los ID en su totalidad para su extracción, si no que al cambiar la forma en la que se identifica el RFC y el nombre permite que no se lleguen a mezclar datos al recibir datos más complejos que no entren en las reglas que había colocado anteriormente.
 
+#Nota: Se pueden observar los intentos fallidos en la carpeta 'data/outputs' con el nombre '_prueba_#.csv'
+
 Lo siguiente en esta función es filtrar los datos acorde a lo que no debe interpretarse como datos relevantes:
 
 ///if not line or 'Página' in line or 'Padrón' in line or 'Registros Activos' in line
@@ -129,4 +131,8 @@ Y para cada etapa se agrega tanto un comentario para quien lea el código, como 
 
 6. Al completar la primera parte del proyecto, para asegurar un backup, así como para mantener un control de versiones, se crea un repositorio en Github para el proyecto.
 
+#Nota: link al repositorio (https://github.com/ClaireRupikaRamode/Prueba-Tecnica-Prodensa-2025)
+
 Se crea el primer commit bajo el nombre "Parte A" para preservar todo el avance realizado hasta el momento.
+
+7.
