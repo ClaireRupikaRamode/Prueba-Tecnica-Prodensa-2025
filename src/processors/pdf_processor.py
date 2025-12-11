@@ -42,17 +42,18 @@ def extract_table_from_pdf(pdf_path):
                     if len(all_rows) > 990 and len(all_rows) < 1010:
                         print(f"Pág {page_num}, Línea no capturada: '{line}'")
 
+    #Se crea el DataFrame
     df = pd.DataFrame(all_rows, columns=['ID', 'RFC', 'NOMBRE'])
     df = df.drop_duplicates()
     return df
 
 def clean_padron_data(df):
     """Limpieza adicional del DataFrame."""
-    # Elimina espacios extra en los nombres y RFC
+    # Se eliminan espacios extra en los nombres y RFC
     df['NOMBRE'] = df['NOMBRE'].str.strip()
     df['RFC'] = df['RFC'].str.strip()
-    # Convierte ID a numérico (si es necesario)
+    # Se convierte el ID a numérico (de ser necesario)
     df['ID'] = pd.to_numeric(df['ID'], errors='coerce')
-    # Ordena por ID
+    # Se ordena por ID
     df = df.sort_values('ID').reset_index(drop=True)
     return df

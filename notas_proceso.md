@@ -9,7 +9,9 @@ Para instalar las dependencias de forma automatizada basta con ejecutar:
 ///pip install -r requirements.txt
 
 2. Luego crear la estructura del proyecto:
-///Primero pensaba utilizar esta estructura básica:
+
+#Nota: Primero pensaba utilizar esta estructura básica:
+
 Prueba_Tecnica/
 | data/                # archivos de origen
 ├──  scripts/
@@ -23,7 +25,8 @@ Prueba_Tecnica/
 |    ├── padrón.csv
 |    ├── immex_rfc.csv
 
-///Sin embargo, al momento de estar realizando la parte B, he decidido organizarme mejor y distribuirlo de una forma más profesional:
+#Nota: Sin embargo, al momento de estar realizando la parte B, he decidido organizarme mejor y distribuirlo de una forma más profesional:
+
 Prueba_Tecnica/
 │
 ├── README.md                    # Instrucciones de ejecución
@@ -86,6 +89,44 @@ Lo siguiente en esta función es filtrar los datos acorde a lo que no debe inter
 
 ///if not line or 'Página' in line or 'Padrón' in line or 'Registros Activos' in line
 
-Extraer el 
+Después se extrae el ID (ya incluyendo las comas), el RFC y el nombre
+Para posteriormente limpiar los ID acabando con números limpios.
 
-5. 
+///id_num_with_comma, rfc, nombre = match.groups()
+    id_num = id_num_with_comma.replace(',', '')
+    all_rows.append({'ID': id_num, 'RFC': rfc, 'NOMBRE': nombre})
+
+Como precaución para confirmar que todo esté siendo procesado correctamente se muestra qué lineas no se están capturando como datos para el CSV.
+
+///if len(all_rows) > 990 and len(all_rows) < 1010:
+    print(f"Pág {page_num}, Línea no capturada: '{line}'")
+
+Finalmente con la biblioteca pandas se crea el DataFrame acorde a los datos que queremos.
+
+///df = pd.DataFrame(all_rows, columns=['ID', 'RFC', 'NOMBRE'])
+    df = df.drop_duplicates()
+    return df
+
+Se continua con la función que termina de limpiar los datos del DataFrame, tal como eliminar los espacios de sobra y ordenar los datos por su número de ID.
+
+///def clean_padron_data(df):
+    """Limpieza adicional del DataFrame."""
+    # Elimina espacios extra en los nombres y RFC
+    df['NOMBRE'] = df['NOMBRE'].str.strip()
+    df['RFC'] = df['RFC'].str.strip()
+    # Convierte ID a numérico (si es necesario)
+    df['ID'] = pd.to_numeric(df['ID'], errors='coerce')
+    # Ordena por ID
+    df = df.sort_values('ID').reset_index(drop=True)
+    return df
+
+
+5. Ya que están bien definidas las funciones que van a realizar todo el proceso entonces se crea el código que va a ejercer como "ejecutor principal"
+
+Esto siguiendo una estructura de 3 etapas, para poder llevar un mejor control de lo que está ocurriendo, en qqué orden y facilitar la corrección de errores así como permitir futuras implementaciones o cambios a funciones ya existentes.
+
+Y para cada etapa se agrega tanto un comentario para quien lea el código, como un print() informativo para el usuario que ejecute el mismo, para monitoreo durante ejecución.
+
+6. Al completar la primera parte del proyecto, para asegurar un backup, así como para mantener un control de versiones, se crea un repositorio en Github para el proyecto.
+
+Se crea el primer commit bajo el nombre "Parte A" para preservar todo el avance realizado hasta el momento.
