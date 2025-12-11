@@ -1,0 +1,15 @@
+# Entornos virtuales y archivos compilados
+venv/
+__pycache__/
+*.py[cod]
+.python-version
+
+# Datos y outputs
+data/raw/
+data/interim/
+outputs/
+
+# Entornos y IDE
+.vscode/
+.idea/
+*.swp

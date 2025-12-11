@@ -26,19 +26,19 @@ def extract_table_from_pdf(pdf_path):
             lines = text.split('\n')
             for line in lines:
                 line = line.strip()
-                # Filtros básicos de líneas no-dato
+                # Filtros básicos de líneas 'no-dato'
                 if not line or 'Página' in line or 'Padrón' in line or 'Registros Activos' in line:
                     continue
 
                 match = pattern.match(line)
                 if match:
-                    # Extraemos el ID (puede contener comas)
+                    # Extraemos el ID con comas, RFC y Nombre
                     id_num_with_comma, rfc, nombre = match.groups()
-                    # ELIMINAMOS las comas del ID para tener un número limpio
+                    # Se eliminan las comas del ID para tener un número limpio en el CSV
                     id_num = id_num_with_comma.replace(',', '')
                     all_rows.append({'ID': id_num, 'RFC': rfc, 'NOMBRE': nombre})
                 else:
-                    # Mantenemos el debugging para verificar
+                    # Se verifica qué lineas no se están capturando
                     if len(all_rows) > 990 and len(all_rows) < 1010:
                         print(f"Pág {page_num}, Línea no capturada: '{line}'")
 

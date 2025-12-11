@@ -72,13 +72,20 @@ Considero que la organización es una parte bastante importante en los proyectos
 #Nota: Intenté realizarlo primero con la biblioteca 'camelot-py', sin embargo, esta no procesó correctamente los datos, generando al final un CSV con información mezclada.
 
 Intenté muchas veces realizar la extracción de datos, sin embargo, siempre
-se quedaba trabada la extracción de datos hasta el 'ID 999', esto debido a que estaba utilizando como patrón de extracción lo siguiente:
+se quedaba trabada la extracción hasta el 'ID 999', esto debido a que estaba utilizando como patrón de extracción lo siguiente:
 
-pattern = re.compile(r'^(\d+)\s+([A-Z&Ñ]{3,4}\d{6}[A-Z0-9]{3})\s+(.+)$')
+///pattern = re.compile(r'^(\d+)\s+([A-Z&Ñ]{3,4}\d{6}[A-Z0-9]{3})\s+(.+)$')
 
 Lo que causaba que al pasar de la cifra 999 se dejara de extraer datos, ya que el PDF separaba los ID al pasar de 1000 con una ',' haciendo que el script descartara todo lo que no fuera solamente un número, al final bastó hacer una pequeña modificación al patrón de extracción de la siguiente manera:
 
-pattern = re.compile(r'^([\d,]+)\s+([A-Z&Ñ0-9]{12,13})\s+(.+)$')
+///pattern = re.compile(r'^([\d,]+)\s+([A-Z&Ñ0-9]{12,13})\s+(.+)$')
 
 Con unas cuantas modificaciones no solo empezó a detectarse correctamente los ID en su totalidad para su extracción, si no que al cambiar la forma en la que se identifica el RFC y el nombre permite que no se lleguen a mezclar datos al recibir datos más complejos que no entren en las reglas que había colocado anteriormente.
 
+Lo siguiente en esta función es filtrar los datos acorde a lo que no debe interpretarse como datos relevantes:
+
+///if not line or 'Página' in line or 'Padrón' in line or 'Registros Activos' in line
+
+Extraer el 
+
+5. 
