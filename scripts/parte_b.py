@@ -22,14 +22,15 @@ def main():
     immex_df = pd.read_excel(immex_path, dtype=str, skiprows=4)
 
     # Se realiza el cruce
-    print("\nRealizando cruce aproximado de empresas...")
+    print("\nRealizando cruce aproximado de empresas, por favor espere...")
     result_df = merge_immex_with_rfc(immex_df, padron_df)
     
     # Se guarda el resultado
     output_path = "outputs/Immex_con_RFC.csv"
     os.makedirs("outputs", exist_ok=True)
     result_df.to_csv(output_path, index=False, encoding='utf-8-sig')
-    print(f"IMMEX con RFC guardado en: {output_path}")
+    #print(f"IMMEX con RFC guardado en: {output_path}")
+    print(f"IMMEX con RFC guardado")
     
     # Se muestran estadísticas generales
     match_rate = (result_df['RFC'].notna().sum() / len(result_df)) * 100

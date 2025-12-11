@@ -40,7 +40,7 @@ def extract_table_from_pdf(pdf_path):
                 else:
                     # Se verifica qué lineas no se están capturando
                     if len(all_rows) > 990 and len(all_rows) < 1010:
-                        print(f"Pág {page_num}, Línea no capturada: '{line}'")
+                        print("Pág {page_num}, Línea no capturada: '{line}'")
 
     #Se crea el DataFrame
     df = pd.DataFrame(all_rows, columns=['ID', 'RFC', 'NOMBRE'])

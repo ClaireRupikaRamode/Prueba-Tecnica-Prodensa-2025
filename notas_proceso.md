@@ -69,7 +69,7 @@ Prueba_Tecnica/
 Considero que la organización es una parte bastante importante en los proyectos y la considero indispensable antes, durante y después de la realización de un proyecto.
 
 3. Comenzando con la Parte A de la prueba.
-Decidí automatizar el proceso de descarga del archivo desde el portal del SAT con el script 'sat_downloader.py', bastando con ejecutarlo para recibir el PDF directamente en la carpeta 'data/raw', sin embargo, este código es solo una función que debe ser llamada por otro código, en este caso 'parte_a.py'
+Decidí automatizar el proceso de descarga del archivo desde el portal del SAT con el script 'sat_downloader.py' utilizando la librería 'requests', bastando con ejecutarlo para recibir el PDF directamente en la carpeta 'data/raw', sin embargo, este código es solo una función que debe ser llamada por otro código, en este caso 'parte_a.py'
 
 4. Lo siguiente es extraer todo el texto de las tablas que vienen en el PDF, así que haciendo uso de la libería pdfplumber se puede extraer todo el texto de cada página.
 
@@ -154,3 +154,4 @@ Lo siguiente que realiza el script es colocar las reglas para leer el excel, est
 
 Se realiza el cruce de datos y se guarda el resultado en un CSV en la carpeta 'outputs/', finalmente, se muestra un porcentaje de de la tasa de coincidencia total.
 
+11. 

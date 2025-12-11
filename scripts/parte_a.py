@@ -13,14 +13,15 @@ def main():
     # Se descarga el PDF
     pdf_path = pdf_downloader()
     # Se procesa y se limpia
-    print("Extrayendo y limpiando datos del PDF...")
+    print("Extrayendo y limpiando datos del PDF, por favor espere...")
     df = extract_table_from_pdf(pdf_path)
     df = clean_padron_data(df)
     # Se guarda el resultado
     output_path = "outputs/Pad_Imp_limpio.csv"
     os.makedirs("outputs", exist_ok=True)
     df.to_csv(output_path, index=False, encoding='utf-8-sig') # Encoding para abrir en Excel
-    print("Padrón limpio guardado en: data/raw/Pad_Imp.pdf")
+    #print("Padrón limpio guardado en: data/raw/Pad_Imp_limpio.csv")
+    print(f"Padrón limpio guardado")
     return df
 
 if __name__ == "__main__":

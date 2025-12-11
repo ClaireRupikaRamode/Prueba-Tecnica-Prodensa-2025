@@ -9,9 +9,16 @@ def normalize_text(text):
         return ""
     # Se eliminan acentos (si los hay)
     text = unicodedata.normalize('NFKD', text).encode('ASCII', 'ignore').decode('ASCII')
+
     # Se eliminan signos de puntuación y espacios extra
     text = re.sub(r'[^\w\s]', ' ', text)
     text = re.sub(r'\s+', ' ', text).strip()
+    
+    # Se eliminan términos corporativos comunes:
+    corporate_terms = {'sa', 'de', 'cv', 'rl', 'sapi', 'sc', 'inc', 'llc'}
+    words = text.split()
+    filtered_words = [w for w in words if w not in corporate_terms]
+    text = ' '.join(filtered_words)
     return text
 
 def find_best_match(query, choices, threshold=80):

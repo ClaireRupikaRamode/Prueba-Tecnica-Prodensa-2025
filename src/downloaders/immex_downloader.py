@@ -21,5 +21,6 @@ def download_immex_excel(output_path="data/raw/directorio_immex.xlsx"):
     with open(output_path, 'wb') as f:
         for chunk in response.iter_content(chunk_size=8192):
             f.write(chunk)
-    print(f"Excel descargado en: {output_path}")
+    #print(f"Excel descargado en: {output_path}")
+    print(f"Excel descargado")
     return output_path

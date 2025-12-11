@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Procesamiento SAT / IMMEX</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; }
+        .container { max-width: 600px; margin: auto; }
+        h1 { color: #333; }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+        .btn:hover { background-color: #45a049; }
+        .btn-secondary { background-color: #008CBA; }
+        .btn-secondary:hover { background-color: #007B9E; }
+        .status { margin-top: 20px; padding: 10px; border-radius: 5px; }
+        .success { background-color: #d4edda; color: #155724; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Descarga de Archivos Procesados</h1>
+        <p>Los siguientes archivos han sido generados automáticamente:</p>
+
+        <a href="/download/padron" class="btn">
+            Descargar Padrón de Importadores (CSV)
+        </a>
+        <a href="/download/immex" class="btn btn-secondary">
+            Descargar Directorio IMMEX con RFC (CSV)
+        </a>
+
+        <!-- Opcional: Botón para regenerar -->
+        <!-- <button onclick="runProcess()" class="btn">🔄 Regenerar Archivos</button> -->
+        <!-- <div id="statusMessage"></div> -->
+    </div>
+
+    <script>
+        // Función opcional para ejecutar procesamiento vía AJAX
+        function runProcess() {
+            fetch('/run-process')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('statusMessage').innerHTML =
+                        `<div class="status success">${data.status} Los botones se activarán cuando termine.</div>`;
+                });
+        }
+    </script>
+</body>
+</html>
