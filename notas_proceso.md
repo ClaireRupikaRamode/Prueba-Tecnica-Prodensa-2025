@@ -154,4 +154,6 @@ Lo siguiente que realiza el script es colocar las reglas para leer el excel, est
 
 Se realiza el cruce de datos y se guarda el resultado en un CSV en la carpeta 'outputs/', finalmente, se muestra un porcentaje de de la tasa de coincidencia total.
 
-11. 
+11. Finalizando con el proyecto, llegamos a la parte C de la prueba.
+
+#Nota: Quiero aclarar que no sé mucho sobre aplicaciones web o  
