@@ -4,7 +4,7 @@ Ejecutando en la terminal:
 ///python -m venv venv
 source venv/bin/activate #Ya que me encuentro en Linux
 pip install --upgrade pip
-pip install requests selenium webdriver-manager pdfplumber pymupdf PyPDF2 pandas numpy openpyxl thefuzz python-Levenshtein flask flask-cors python-dotenv tqdm
+pip install requests pdfplumber pandas numpy thefuzz flask flask-cors tqdm
 
 Para instalar las dependencias de forma automatizada basta con ejecutar:
 ///pip install -r requirements.txt
@@ -195,3 +195,6 @@ Luego de resolver el problema anterior empecé a recibir un error que indicaba q
 ###Problema 4, Parte C: Rutas relativas en Flask
 Al ejecutar la parte C de la prueba se llevaban a cabo todos los procesos correctamente, sin embargo, al momento de intentar descargar los archivos la página y la terminal marcaba error, indicando que no se encontraron archivos en '/src/webapp/outputs/', esto rápidamente me indicó que había un problema al definir los directorios ya que Flask buscaba desde 'src/webapp/', no desde raíz del proyecto.
 Esto se solucionó agregando a 'app.py' un 'BASE_DIR' para construir rutas absolutas.
+
+###Mejoras futuras:
+Si tuviera más tiempo para realizar esta prueba, agregaría a todos los procesos una barra de progreso que indique el avance en tiempo real para hacer menos tediosa la espera para la finalización de cada parte en lugar de que se mida el progreso acorde a los procesos completados, en su defecto añadiría que en la terminal se muestre el avance acorde a qué página del documento de la parte A se encuentra en proceso y en qué linea del excel de la parte B se encuentra haciendo match ese proceso.
