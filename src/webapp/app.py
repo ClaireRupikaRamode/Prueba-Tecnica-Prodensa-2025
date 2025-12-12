@@ -54,7 +54,7 @@ def run_parte_a():
             process_status[process_id]['progress'] = 100
             process_status[process_id]['file_path'] = FILE_PATHS['parte_a']
         else:
-            process_status[process_id]['message'] = 'Proceso terminó pero archivo no encontrado'
+            process_status[process_id]['message'] = 'Proceso terminado, pero no se encontró el archivo'
             process_status[process_id]['progress'] = 0
         
     except Exception as e:
@@ -93,13 +93,13 @@ def run_parte_b():
             process_status[process_id]['progress'] = 0
         
     except Exception as e:
-        process_status[process_id]['message'] = f'❌ Error: {str(e)}'
+        process_status[process_id]['message'] = f'Error: {str(e)}'
         process_status[process_id]['progress'] = 0
     finally:
         time.sleep(1)
         process_status[process_id]['running'] = False
 
-# ===== RUTAS DEL BACKEND =====
+#Rutas del backend
 
 @app.route('/')
 def index():
@@ -108,14 +108,14 @@ def index():
 
 @app.route('/api/status/<process_id>')
 def get_status(process_id):
-    """API para obtener estado del proceso"""
+    """Obtener estado del proceso"""
     if process_id in process_status:
         return jsonify(process_status[process_id])
     return jsonify({'error': 'Proceso no encontrado'}), 404
 
 @app.route('/api/run/<process_id>', methods=['POST'])
 def run_process(process_id):
-    """API para iniciar un proceso"""
+    """Iniciar un proceso"""
     if process_id not in process_status:
         return jsonify({'error': 'Proceso no válido'}), 400
     

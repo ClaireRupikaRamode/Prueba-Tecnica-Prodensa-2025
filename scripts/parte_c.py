@@ -18,7 +18,7 @@ def main():
     print("   3. Ver progreso en tiempo real")
     print("   4. Descargar archivos generados")
     print("\nPor favor, abra el navegador y acceda a la siguiente IP:")
-    print("   → http://127.0.0.1:5000")
+    print("   http://127.0.0.1:5000")
     print("\nLa aplicación se está iniciando...")
     print("   (Presione Ctrl+C para detener)\n")
     

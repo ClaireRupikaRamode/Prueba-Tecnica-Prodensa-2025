@@ -1,5 +1,6 @@
 1. Para iniciar el proyecto, usualmente lo primero es crear un entorno virtual para el proyecto, para así mantener un control de las dependencias.
 Ejecutando en la terminal:
+
 ///python -m venv venv
 source venv/bin/activate #Ya que me encuentro en Linux
 pip install --upgrade pip
@@ -132,9 +133,11 @@ Y para cada etapa se agrega tanto un comentario para quien lea el código, como 
 
 6. Al completar la primera parte del proyecto, para asegurar un backup, así como para mantener un control de versiones, se crea un repositorio en Github para el proyecto.
 
-#Nota: link al repositorio (https://github.com/ClaireRupikaRamode/Prueba-Tecnica-Prodensa-2025)
+#Nota: link al repositorio (https://github.com/ClaireRupikaRamode/Prueba-Tecnica-Prodensa-2025), este a pesar de ser público al momento de entregar la prueba, será eliminado tras su revisión.
 
 Se crea el primer commit bajo el nombre "Parte A" para preservar todo el avance realizado hasta el momento.
+
+Tras un par de correcciones en la gramática de las notas y una breve revisión del código que conforma toda la parte A, se crea el segundo commit bajo el nombre "Parte A Completada"
 
 7. Continuando con la Parte B de la prueba.
 Lo primero, al igual que en la parte A, es automatizar la descarga del archivo con el que vamos a trabajar, para crear 'immex_downloader.py' fue suficiente con replicar el código de 'sat_downloader.py' cambiando unos detalles, tales como cambiar el link de donde se obtendrá la descarga y dejando de nuevo la URL como una variable para permitir cambiar el link fácilmente.
@@ -154,6 +157,41 @@ Lo siguiente que realiza el script es colocar las reglas para leer el excel, est
 
 Se realiza el cruce de datos y se guarda el resultado en un CSV en la carpeta 'outputs/', finalmente, se muestra un porcentaje de de la tasa de coincidencia total.
 
-11. Finalizando con el proyecto, llegamos a la parte C de la prueba.
+11. Al completar la segunnda parte de la prueba, se actualiza el backup y se añade una nueva versión , creando el tercer commit bajo el nombre "Parte B Completada"
 
-#Nota: Quiero aclarar que no sé mucho sobre aplicaciones web o  
+12. Finalizando con el proyecto, llegamos a la parte C de la prueba.
+Lo primero en este caso es crear 'app.py' que será la base con la que funcione el sitio web, primero localizando los directorios en donde se encontrarán los archivos más importantes para esta prueba (los resultados), e indicando los nombres que tienen estos archivos para que se descarguen exclusivamente esos resultados y evitar algún error si se llega a introducir archivos extra en la misma carpeta.
+
+Después, ya que se solicitaron barras de progreso en la parte web, se indica el estado global de los procesos como "no iniciados" y con un progreso de 0.
+
+Se configura que al ejecutar la parte A del proyecto la barra de progreso avance acorde a los procesos que está realizando el código, avanzando un 10% al concluir la descarga del PDF, un 30% al iniciar el procesamiento del archivo, un 80% al estar guardando el archivo final y se agrega una verificación al final para marcar si el proceso ha terminado por completo generando el archvio, marcando un 100%, si no se pudo generar el archivo señalarlo al usuario, o en su defecto mostrar algún error ocurrido durante el proceso.
+
+Después se realiza el mismo procedimiento al ejecutar la parte B, midiendo su progreso acorde a los procesos que se van realizando, marcando un 20% de avance al concluir la descarga del archivo que vamos a utilizar, luego un 50% al iniciar el cruce de datos, un 80% al llegar a la parte donde se asignan RFC acorde a los nombres obtenidos, y finalmente se vuelve a hacer una verificación al final con la misma estructura utilizada para la ejecución de la parte A.
+
+Lo siguiente es colocar las funciones con las que se definen las rutas con las que va a trabajar todo el backend, tales como las rutas donde se realizarán las descargas, donde se verificará que estén los archivos finales, entre otros.
+
+13. La siguiente parte que conforma la parte C es el archivo 'index.html' que será la estructura completa del frontend de la página web, se utiliza Bootstrap como framework por su rapidez de implementación y el hecho de permitir una variedad de elementos ya pre-diseñados.
+
+#Nota: Esto debido a mi falta de experiencia con HTML.
+
+Se utilizan componentes con los que darle una separación visual a "Parte A" de "Parte B", informar al usuario del estado de los procesos, se incluyen barras de progreso y se implementan botones para poder llevar a cabo la ejecución de los procesos y la descarga de archivos.
+
+Se utiliza una parte de JavaScript para comunicación con el backend, `fetch()` para llamar a los endpoints de Flask sin necesitar recargar la página, `/api/status/` para actualizar el progreso de los procesos, y cada botón tiene 3 estados (inactivo, ejecutando, completado).
+
+14. Finalmente se crea 'parte_c.py' que será el que ejecute toda la parte final de la prueba en conjunto.
+esta se encarga básicamente de iniciar la aplicación web e indicarle al usuario qué dirección tiene que visitar en su navegador para poder probar las funciones del proyecto, así como señalar los procesos que se pueden realizar desde el sitio web e informar cómo detener el proceso.
+
+###Notas finales: Problemas encontrados y soluciones
+
+###Problema 1, Parte A: El regex fallaba al detectar un ID mayor a 999
+Al ejecutar la parte A de la prueba esta dejaba de extraer datos del PDF base tras pasar del registro con ID 999, tras añadir código que imprimiera en pantalla qué lineas no se estaban capturando para analizar qué tenían en común, al recibir datos como que a partir de '1,000 ABC123456ABC Nombre' dejaba de capturarse todo lo demás, encontré que los ID se leían directamente con la coma que se utiliza para escribir cifras grandes, es decir, en vez de leerse como "1000", se leía directamente como "1,000".  Por lo que la parte del regex '^(\d+)' no era capaz de capturar los ID que no fueran únicamente números, es por eso que se tuvo que cambiar a '^([\d,]+)' para permitir incluir cifras con comas y más adelante se pudieran remover al limpiar datos.
+
+###Problema 2, Parte B: Columnas incorrectas
+Al ejecutar la parte B de la prueba esta primero marcaba error, indicando que no había ninguna columna con los datos que estaba señalando para su extracción como 'NOMBRE' o 'RAZON_SOCIAL', una vez más bastó con aañadir código que imprimiera lo que se estaba detectando al momento de procesar el archivo, recibiendo resultados en los que se estaban detectando las primeras lineas del archivo, es decir, 'DIRECTORIO DE PROGRAMAS IMMEX INFORMACIÓN ACTUALIZADA AL 31 DE OCTUBRE DE 2025 SECRETARÍA DE ECONOMÍA CON INFORMACIÓN DE VUCEM', como si fueran columnas, por lo que decidí agregar una línea de código que se saltara hasta la fila 5 del documento para empezar a leer las columnas.
+
+###Problema 3, Parte B: Columnas con acentos en IMMEX
+Luego de resolver el problema anterior empecé a recibir un error que indicaba que no se encontraba una columna con el nombre 'RAZON_SOCIAL', que era el nombre que indiqué que se buscara para empezar a generar 'RAZON_SOCIAL_NORM', esto debido a que en el archivo, esta columna se encontraba como 'RAZÓN_SOCIAL' (con acento).  Esto se pudo corregir rápidamente modificando en 'company_matcher.py' que se busque la columna con acento.
+
+###Problema 4, Parte C: Rutas relativas en Flask
+Al ejecutar la parte C de la prueba se llevaban a cabo todos los procesos correctamente, sin embargo, al momento de intentar descargar los archivos la página y la terminal marcaba error, indicando que no se encontraron archivos en '/src/webapp/outputs/', esto rápidamente me indicó que había un problema al definir los directorios ya que Flask buscaba desde 'src/webapp/', no desde raíz del proyecto.
+Esto se solucionó agregando a 'app.py' un 'BASE_DIR' para construir rutas absolutas.
