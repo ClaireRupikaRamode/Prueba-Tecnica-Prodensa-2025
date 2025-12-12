@@ -1,4 +1,4 @@
-Guía de Ejecución
+# Guía de Ejecución
 
 1. Clonar el repositorio
 
@@ -8,11 +8,13 @@ cd Prueba-Tecnica-Prodensa-2025
 
 2. Crear entorno virtual (de preferencia)
 
-# Linux/Mac
+Linux/Mac:
+
 python -m venv venv
 source venv/bin/activate
 
-# Windows
+Windows:
+
 python -m venv venv
 venv\Scripts\activate
 
